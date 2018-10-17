@@ -1,0 +1,98 @@
+<html>
+<head>
+  <style>
+  input.c5{
+    width:80%;
+    float:right;
+
+       border-radius: 5px;
+      outline:0;
+      line-height:25px;
+  }
+  div.c1{
+    border-style: ridge;
+     border-radius: 5px;
+
+     line-height:30px;
+  }
+  textarea{
+    width:80%;
+    float:right;
+    border-style: inset;
+    border-width: medium;
+
+       border-radius: 5px;
+      outline:0;
+  }
+  div.c2{
+    padding-left: 10px;
+  }
+  input.c6{
+      margin-left: 20px;
+      border-radius: 5px;
+     outline:0;
+     line-height:25px;
+  }
+
+div.heading{
+  width:100%;
+  line-height:wrapText;
+   background-color:#abb7cc;
+}
+  </style>
+</head>
+<body>
+<DIV CLASS="heading">  <h2>SEND NEW MAIL</H2></div>
+    <HR>
+
+
+
+  <form>
+<DIV CLASS="heading"><H3>RECIVER'S DETAILS</H3></DIV>
+<div class="c1">
+  <br>
+  <div class="c2">
+      To:
+      <input class="c5"  type="email"  id="usr" name="email1" required>
+</div>
+<div class="c2">
+  <br>
+  CC:
+  <input class="c5"  type="email"  id="usr" name="email2">
+</div>
+<div class="c2">
+  <br>
+  BCC:
+  <input class="c5"  type="email"  id="usr" name="email3">
+</div>
+<br>
+</DIV>
+<DIV CLASS="heading"><H3>MESSAGE DETAILS</H3></DIV><BR>
+<div class="c1">
+<div class="c2">
+  <br>
+  SUBJECT:
+  <input class="c5" type="text"  id="usr" name="subject">
+</div>
+<div class="c2">
+  <br>
+  Message:
+  <textarea rows="4" cols="50" name="comment" form="usrform">
+Enter text here...</textarea>
+</div>
+<div class="c2">
+  <br>
+  Attachment:<input class="c5" type="file" name="attachment">
+</div>
+<br>
+<br>
+</div>
+<input class="c6" type="submit" value="Submit">
+
+
+
+  </form>
+
+
+</body>
+</html>
