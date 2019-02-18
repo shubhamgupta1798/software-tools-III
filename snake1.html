@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+
+background-color: #030221;
+  }
+  div.c1{
+align-items: center;
+    justify-content: center;
+    padding-top: 10%;
+
+  }
+  canvas {
+margin-left: 10%;
+    border: 1px solid white;
+
+  }
+  .c2{
+    float:left;
+  }
+  </style>
+</head>
+<body>
+  <div style="padding-top: 10%;float:right;margin-right:50%;color:white;font-size:25px;">
+
+    Score :
+  <span id="score1" > 0</span>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+
+    <div class="c1">
+      <div class="c2">
+          <button id="b1" style="margin-left:200px;" >UP</button><br>
+      <button id="b2" style="margin-left:170px;" >LEFT</button>
+<button id="b3" >RIGHT</button><br>
+<button  id="b4"  style="margin-left:190px;" >DOWN</button>
+    </div>
+<canvas width="560" height="560" id="game"></canvas>
+</div>
+<script src="js1.js"></script>
+<script>
+var k=40;
+var canvas = document.getElementById('game');
+var context = canvas.getContext('2d');
+var val = 20;
+var count = 0;
+var score=0;
+var c1 = 0;
+var x2 = getRandomInt(0, 26) * val;
+var y2 = getRandomInt(0, 26) * val;
+var bonus = {
+  x:x2,
+  y:y2
+};
+var snake = {
+  x: 100,
+  y: 100,
+
+  dx: val,
+  dy: 0,
+  length: [],
+
+  maxlength: 4
+};
+var x1 = getRandomInt(0, 26) * val;
+var y1 = getRandomInt(0, 26) * val;
+var moves=1;
+var ball = {
+  x: x1,
+  y: y1
+
+};
+x1 = getRandomInt(0, 26) * val;
+y1 = getRandomInt(0, 26) * val;
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function create() {
+  requestAnimationFrame(create);
+if (count++ < 10) {
+    return;
+  }
+  count = 0;
+    //  alert("here");
+  context.clearRect(0,0,canvas.width,canvas.height);
+    snake.x += snake.dx;
+  snake.y += snake.dy;
+  if (snake.x < 0) {
+    snake.x = 100;
+    snake.y = 100;
+    snake.length = [];
+    snake.maxlength = 4;
+    snake.dx = val;
+    snake.dy = 0;
+    ball.x = getRandomInt(0, 26) * val;
+    ball.y = getRandomInt(0, 26) * val;
+
+    alert("Your score is:" +score);
+    score=0;
+    $("#score1").text(""+score);
+    moves=1;
+  }
+  else if (snake.x >= canvas.width) {
+    snake.x = 100;
+    snake.y = 100;
+    snake.length = [];
+    snake.maxlength = 4;
+    snake.dx = val;
+    snake.dy = 0;
+    ball.x = getRandomInt(0, 26) * val;
+    ball.y = getRandomInt(0, 26) * val;
+
+    alert("Your score is:" +score);
+    score=0;
+      $("#score1").text(""+score);
+    moves=1;
+  }
+  if (snake.y < 0) {
+    snake.x = 100;
+    snake.y = 100;
+    snake.length = [];
+    snake.maxlength = 4;
+    snake.dx = val;
+    snake.dy = 0;
+    ball.x = getRandomInt(0, 26) * val;
+    ball.y = getRandomInt(0, 26) * val;
+
+    alert("Your score is:" +score);
+    score=0;
+      $("#score1").text(""+score);
+    moves=1;
+  }
+  else if (snake.y >= canvas.height) {
+    snake.x = 100;
+    snake.y = 100;
+    snake.length = [];
+    snake.maxlength = 4;
+    snake.dx = val;
+    snake.dy = 0;
+    ball.x = getRandomInt(0, 26) * val;
+    ball.y = getRandomInt(0, 26) * val;
+
+    alert("Your score is:" +score);
+    score=0;
+    moves=1;
+    $("#score1").text(""+score);
+  }
+  snake.length.unshift({x: snake.x, y: snake.y});
+  if (snake.length.length > snake.maxlength) {
+    snake.length.pop();
+  }
+  context.fillStyle = 'red';
+  context.fillRect(ball.x, ball.y, val-1, val-1);
+  if(moves%5==0 && score!=0 && k>0 && c1==0)
+  {
+
+  //  alert("here");
+    k--;
+    context.fillStyle = '#b0e0e6';
+    context.fillRect(bonus.x, bonus.y, val-1, val-1);
+    context.fillStyle = 'green';
+  }
+
+  context.fillStyle = 'green';
+  var e=0;
+  snake.length.forEach(function(cell, index) {
+context.fillStyle = 'green';
+if(e==0)
+{
+  context.fillStyle = 'yellow';
+  context.fillRect(cell.x, cell.y, val-1, val-1);
+  e++;
+}
+  else
+    context.fillRect(cell.x, cell.y, val-1, val-1);
+    if (cell.x === ball.x && cell.y === ball.y) {
+      snake.maxlength++;
+      score=score+10;
+      $("#score1").text(""+score);
+    //  var v=document.getElementById("score1");
+    //  v.innerHTML=score;
+
+      ball.x = getRandomInt(0, 26) * val;
+      ball.y = getRandomInt(0, 26) * val;
+      bonus.x = getRandomInt(0, 26) * val;
+      bonus.y = getRandomInt(0, 26) * val;
+     c1=0;
+      k=40;
+      moves++;
+    }
+  //  alert(c1);
+    if (cell.x === bonus.x && cell.y === bonus.y && moves%5==0 && score!=0 && k>0 ) {
+    //  snake.maxlength++;
+    if(c1==0){
+        score=score+k;
+      var v=document.getElementById("score1");
+      v.innerHTML=score;
+    }
+
+    //  alert(score);
+      c1++;
+
+
+    }
+  for (var i = index + 1; i < snake.length.length; i++) {
+  if (cell.x === snake.length[i].x && cell.y === snake.length[i].y) {
+        snake.x = 160;
+        snake.y = 160;
+        snake.length = [];
+        snake.maxlength = 4;
+        snake.dx = val;
+        snake.dy = 0;
+        ball.x = getRandomInt(0, 26) * val;
+        ball.y = getRandomInt(0, 26) * val;
+
+        alert("Your score is:" +score);
+        score=0;
+          $("#score1").text(""+score);
+        moves=1;
+      //  alert("Your score is:" +score);
+      }
+    }
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.which === 37 && snake.dx === 0) {
+    snake.dx = -val;
+    snake.dy = 0;
+  }
+  // up arrow key
+  else if (e.which === 38 && snake.dy === 0) {
+    snake.dy = -val;
+    snake.dx = 0;
+  }
+else if (e.which === 39 && snake.dx === 0) {
+    snake.dx = val;
+    snake.dy = 0;
+  }
+  else if (e.which === 40 && snake.dy === 0) {
+    snake.dy = val;
+    snake.dx = 0;
+  }
+});
+
+
+requestAnimationFrame(create);
+
+$(document).ready(function(){
+  $("#b1").click(function(){
+    if(snake.dy === 0){
+      snake.dy = -val;
+      snake.dx = 0;
+  }
+  });
+});
+
+$(document).ready(function(){
+  $("#b2").click(function(){
+    if(snake.dx === 0){
+      snake.dx = -val;
+      snake.dy = 0;
+  }
+  });
+});
+
+$(document).ready(function(){
+  $("#b3").click(function(){
+    if(snake.dx === 0){
+      snake.dx = val;
+      snake.dy = 0;
+  }
+  });
+});
+$(document).ready(function(){
+  $("#b4").click(function(){
+    if(snake.dy === 0){
+      snake.dy = val;
+      snake.dx = 0;
+  }
+  });
+});
+
+</script>
+
+</body>
+</html>
